@@ -1,0 +1,22 @@
+version: "3"
+services:
+  jupyterlab:
+    build: .
+    ports:
+      - "8888:8888"
+    environment:
+      GRANT_SUDO: "yes"
+    volumes:
+      - ./work:/home/jovyan/notebooks:z
+    command: start.sh jupyter lab --NotebookApp.token='' --NotebookApp.contents_manager_class='jupytext.TextFileContentsManager'
+
+  rstudio:
+    image: rockerjp/tidyverse:latest
+    ports:
+      - "8787:8787"
+    environment:
+      - USERNAME=rstudio
+      - PASSWORD=rstudio
+      - DISABLE_AUTH=true
+    volumes:
+      - ./work:/home/rstudio/project
